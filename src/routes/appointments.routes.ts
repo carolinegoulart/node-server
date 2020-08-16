@@ -21,12 +21,14 @@ appointmentsRouter.post('/', (request, response) => {
 
     const createAppointmentService = new CreateAppointmentService(appointmentsRepository);
 
-    const appointment = createAppointmentService.execute({provider, date: parsedDate});
+    const appointment = createAppointmentService.execute({ 
+      provider, 
+      date: parsedDate 
+    });
 
     return response.json(appointment);
-    
   } catch(err) {
-    
+    return response.status(400).json({ error: err.message })
   }
 });
 
