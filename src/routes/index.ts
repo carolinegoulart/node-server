@@ -1,10 +1,12 @@
-import { Router } from 'express';
-import appointmentsRoutes from './appointments.routes';
+import { Router } from "express";
+import appointmentsRouter from "./appointments.routes";
+import usersRouter from "./users.routes";
 
 const routes = Router();
 
-// all routes starting with /appointments will be sent to the 
+// all routes starting with /appointments will be sent to the
 // appointments.routes file
-routes.use('/appointments', appointmentsRoutes);
+routes.use("/appointments", appointmentsRouter);
+routes.use("/users", usersRouter);
 
 export default routes;
