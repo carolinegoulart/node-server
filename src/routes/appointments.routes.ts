@@ -1,13 +1,18 @@
-import { Router, response } from "express";
-import { getCustomRepository } from "typeorm";
-import { parseISO } from "date-fns";
+import { Router, response } from 'express';
+import { getCustomRepository } from 'typeorm';
+import { parseISO } from 'date-fns';
 
-import AppointmentsRepository from "../repositories/AppointmentsRepository";
-import CreateAppointmentService from "../services/CreateAppointmentService";
+import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import CreateAppointmentService from '../services/CreateAppointmentService';
+
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
 
-appointmentsRouter.get("/", async (request, response) => {
+// applies the middleware to all the routes
+appointmentsRouter.use(ensureAuthenticated);
+
+appointmentsRouter.get('/', async (request, response) => {
   // gets the instance of the AppointmentsRepository (controlled by TypeORM)
   const appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
@@ -16,7 +21,7 @@ appointmentsRouter.get("/", async (request, response) => {
   return response.json(appointments);
 });
 
-appointmentsRouter.post("/", async (request, response) => {
+appointmentsRouter.post('/', async (request, response) => {
   try {
     const { provider_id, date } = request.body;
 
