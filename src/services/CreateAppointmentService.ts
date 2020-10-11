@@ -1,8 +1,10 @@
-import { startOfHour } from "date-fns";
-import { getCustomRepository } from "typeorm";
+import { startOfHour } from 'date-fns';
+import { getCustomRepository } from 'typeorm';
 
-import Appointment from "../models/Appointment";
-import AppointmentsRepository from "../repositories/AppointmentsRepository";
+import AppError from '../errors/AppError';
+
+import Appointment from '../models/Appointment';
+import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 interface RequestDTO {
   provider_id: string;
@@ -24,7 +26,7 @@ class CreateAppointmentService {
     );
 
     if (findAppointmentInSameDate) {
-      throw Error("This appointment has already been booked.");
+      throw new AppError('This appointment has already been booked.');
     }
 
     // the create method only creates a new instance
